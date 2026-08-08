@@ -27,10 +27,14 @@ const Login = () => {
       const response = await axios.post('http://127.0.0.1:8000/api/v1/token/',userData);
       console.log(response.data);
       localStorage.setItem('accessToken',response.data.access)     
-      localStorage.setItem('refreshToken',response.data.access)   
-      console.log("login Successful");  
+      localStorage.setItem('refreshToken',response.data.refresh)  
+
+      const accessToken = localStorage.getItem("accessToken");
+      console.log("Token:", accessToken);
+      console.log("login Successful");
+        
       setIsLogged(true)
-      navigate('/')  
+      navigate('/Dashboard')  
     } catch (error) {
       console.error("Invalid Credential", error);
       setError('Invalid Credential')

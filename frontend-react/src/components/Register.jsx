@@ -56,6 +56,7 @@ const Register = () => {
             <div className='mb-1'>
             <input type="email" className='form-control' placeholder='Enter email Address' value={email} onChange={(e) => setEmail(e.target.value)}/>
             </div>
+            
             <div className='mb-3'>
                <input type="password" className='form-control' placeholder='Set Password' value={password} onChange={(e) => setPasword(e.target.value)}/>
                <small>{errors.password && <div className='text-danger'>{errors.password}</div>}</small>

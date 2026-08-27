@@ -30,22 +30,38 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     // Handle failed responses
-   async function(error) {
+    async function(error) {
         const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest.retry) {
+
+        if (
+            error.response?.status === 401 &&
+            originalRequest &&
+            !originalRequest.retry &&
+            originalRequest.url !== '/token/refresh/'
+        ) {
             originalRequest.retry = true;
-            const refreshToken = localStorage.getItem('refreshToken')
-            try{
-                const response = await axiosInstance.post('/token/refresh/' ,{refresh:refreshToken})    
-                localStorage.setItem('accessToken',response.data.access);
-                originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`
-                return axiosInstance(originalRequest)
-                
-            } catch(error) {
+            const refreshToken = localStorage.getItem('refreshToken');
+
+            if (!refreshToken) {
+                return Promise.reject(error);
+            }
+
+            try {
+                // Use the base Axios client so this request cannot trigger this interceptor.
+                const response = await axios.post(`${baseURL}/token/refresh/`, {
+                    refresh: refreshToken,
+                });
+
+                localStorage.setItem('accessToken', response.data.access);
+                originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
+                return axiosInstance(originalRequest);
+            } catch (refreshError) {
                 localStorage.removeItem('accessToken')
                 localStorage.removeItem('refreshToken')
+                return Promise.reject(refreshError);
             }
         }
+
         return Promise.reject(error);
     }
 )

@@ -1,1 +1,1 @@
-web: cd backend-drf && gunicorn stock_prediction_main.wsgi:application --bind 0.0.0.0:$PORT
+web: gunicorn app:application --bind 0.0.0.0:$PORT

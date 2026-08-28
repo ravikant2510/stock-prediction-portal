@@ -23,3 +23,9 @@ services:
           property: connectionString
     plan: free
     region: oregon
+
+databases:
+  - name: stock-prediction-db
+    databaseName: stock_prediction
+    user: stock_prediction_user
+    plan: free

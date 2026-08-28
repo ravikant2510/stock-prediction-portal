@@ -12,12 +12,25 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from uuid import uuid4
 from sklearn.preprocessing import MinMaxScaler
-from keras.models import load_model
 from sklearn.metrics import mean_squared_error ,r2_score
+
+# Try to import keras, handle gracefully if not available
+try:
+    from keras.models import load_model
+    KERAS_AVAILABLE = True
+except ImportError:
+    KERAS_AVAILABLE = False
 
 
 class StockPredictionAPIView(APIView):
     def post(self,request):
+        # Check if keras is available
+        if not KERAS_AVAILABLE:
+            return Response(
+                {'detail': 'ML prediction service is not available in this deployment. TensorFlow/Keras is not installed.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+        
         serializer=StockPredictionSerializer(data=request.data)
         if serializer.is_valid():
             ticker = serializer.validated_data['ticker'].strip().upper()

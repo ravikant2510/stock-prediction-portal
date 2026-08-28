@@ -3,7 +3,6 @@ services:
     name: stock-prediction-api
     env: python
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt && cd backend-drf && python manage.py collectstatic --noinput
-    startCommand: cd backend-drf && gunicorn stock_prediction_main.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: SECRET_KEY
         generateValue: true

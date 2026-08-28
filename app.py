@@ -14,5 +14,5 @@ django.setup()
 # Import Django WSGI application
 from django.core.wsgi import get_wsgi_application
 
-# Get the WSGI application
-application = get_wsgi_application()
+# Get the WSGI application (name it 'app' to match Render's auto-detection)
+app = get_wsgi_application()

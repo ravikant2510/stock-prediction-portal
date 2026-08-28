@@ -11,14 +11,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stock_prediction_main.settings'
 import django
 django.setup()
 
-# Import Django application
-from django.core.wsgi import get_wsgi_application
+# Import Django ASGI application
+from django.core.asgi import get_asgi_application
 
-# Get the WSGI application
-django_app = get_wsgi_application()
-
-# Vercel serverless function handler
-from vercel_wsgi import handle_wsgi_event
-
-def handler(event, context):
-    return handle_wsgi_event(django_app, event, context)
+# Vercel expects a top-level 'app' variable
+app = get_asgi_application()

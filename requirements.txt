@@ -5,6 +5,7 @@ djangorestframework-simplejwt==5.5.1
 django-cors-headers==4.9.0
 python-decouple==3.8
 gunicorn==23.0.0
+dj-database-url==2.3.0
 
 # Stock prediction and charting
 tensorflow-cpu==2.20.0

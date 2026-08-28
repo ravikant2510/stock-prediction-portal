@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # For Vercel deployment - configure specific domains in production
 
 
 # Application definition
@@ -81,11 +81,15 @@ WSGI_APPLICATION = 'stock_prediction_main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import dj_database_url
+
+# Use DATABASE_URL for production (Vercel Postgres), fallback to SQLite for development
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 
@@ -126,8 +130,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173'
-
+    'http://localhost:5173',
+    # Add your Vercel frontend URL here after deployment
 ]
 
 REST_FRAMEWORK = {

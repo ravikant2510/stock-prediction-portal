@@ -12,7 +12,7 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: stock_prediction_main.settings
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.11.9
       - key: ALLOWED_HOSTS
         value: .onrender.com,localhost
       - key: CORS_ALLOWED_ORIGINS
@@ -22,3 +22,4 @@ services:
           name: stock-prediction-db
           property: connectionString
     plan: free
+    region: oregon

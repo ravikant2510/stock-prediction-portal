@@ -11,8 +11,5 @@
       "src": "/(.*)",
       "dest": "api/index.py"
     }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "stock_prediction_main.settings"
-  }
+  ]
 }

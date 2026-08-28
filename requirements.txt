@@ -6,6 +6,7 @@ django-cors-headers==4.9.0
 python-decouple==3.8
 gunicorn==23.0.0
 dj-database-url==2.3.0
+vercel-wsgi==0.0.6
 
 # Stock prediction and charting
 tensorflow-cpu==2.20.0
